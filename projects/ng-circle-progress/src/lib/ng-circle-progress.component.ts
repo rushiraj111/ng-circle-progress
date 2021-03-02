@@ -156,17 +156,30 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
                     [attr.stroke]="svg.circle.stroke"
                     [attr.stroke-width]="svg.circle.strokeWidth"/>
             <ng-container *ngIf="+options.percent!==0 || options.showZeroOuterStroke">
+                 <filter id="dropshadow" height="130%">
+                  <feGaussianBlur [attr.in]="SourceAlpha" [attr.stdDeviation]="6"></feGaussianBlur> <!-- stdDeviation is how much to blur -->
+                  <feOffset [attr.dx]="0" [attr.dy]="0" [attr.result]="offsetblur"></feOffset> <!-- how much to offset -->
+                  <feComponentTransfer>
+                    <feFuncA [attr.type]="linear" [attr.slope]="0.6"></feFuncA> <!-- slope is the opacity of the shadow -->
+                  </feComponentTransfer>
+                  <feMerge> 
+                    <feMergeNode></feMergeNode> <!-- this contains the offset blurred image -->
+                    <feMergeNode [attr.in]="SourceGraphic"></feMergeNode> <!-- this contains the element that the filter is applied to -->
+                  </feMerge>
+                </filter>
                 <path *ngIf="!options.outerStrokeGradient"
                         [attr.d]="svg.path.d"
                         [attr.stroke]="svg.path.stroke"
                         [attr.stroke-width]="svg.path.strokeWidth"
                         [attr.stroke-linecap]="svg.path.strokeLinecap"
+                        [attr.filter]="url(#dropshadow)"
                         [attr.fill]="svg.path.fill"/>
                 <path *ngIf="options.outerStrokeGradient"
                         [attr.d]="svg.path.d"
                         attr.stroke="url({{window.location.href}}#{{svg.outerLinearGradient.id}})"
                         [attr.stroke-width]="svg.path.strokeWidth"
                         [attr.stroke-linecap]="svg.path.strokeLinecap"
+                        [attr.filter]="url(#dropshadow)"
                         [attr.fill]="svg.path.fill"/>
             </ng-container>
             <text *ngIf="!options.showImage && (options.showTitle || options.showUnits || options.showSubtitle)"
