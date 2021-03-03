@@ -1,14 +1,11 @@
 {
-  "name": "ng-circle-progress",
-  "version": "1.6.0",
+  "name": "@rushiraj111/ng-circle-progress",
+  "version": "1.6.1",
   "repository": {
     "type": "git",
-    "url": "https://github.com/bootsoon/ng-circle-progress"
+    "url": "git+https://github.com/rushiraj111/ng-circle-progress.git"
   },
-  "author": {
-    "name": "bootsoon",
-    "email": "bootsoon@aliyun.com"
-  },
+  "author": "bootsoon <bootsoon@aliyun.com>",
   "keywords": [
     "angular",
     "circle",
@@ -16,8 +13,9 @@
     "percentage"
   ],
   "license": "MIT",
+  "private": false,
   "bugs": {
-    "url": "https://github.com/bootsoon/ng-circle-progress/issues"
+    "url": "https://github.com/rushiraj111/ng-circle-progress/issues"
   },
   "peerDependencies": {
     "@angular/common": ">=9.1.0",
@@ -26,5 +24,11 @@
   },
   "dependencies": {
     "tslib": "^2.0.0"
+  },
+  "description": "## Demo",
+  "homepage": "https://github.com/rushiraj111/ng-circle-progress#readme",
+  "main": "karma.conf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }

@@ -1,6 +1,6 @@
 {
-  "name": "ng-circle-progress",
-  "version": "1.6.0",
+  "name": "@rushiraj111/ng-circle-progress",
+  "version": "1.6.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,7 +10,7 @@
     "e2e": "ng e2e",
     "postinstall": "ngcc"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~10.1.3",
     "@angular/cdk": "^10.2.2",
@@ -49,5 +49,20 @@
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "~4.0.2"
-  }
+  },
+  "description": "A simple demo app using ng-circle-progress.",
+  "main": "karma.conf.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rushiraj111/ng-circle-progress.git"
+  },
+  "keywords": [
+    "ng-circle-progress"
+  ],
+  "author": "Rushirajsinh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rushiraj111/ng-circle-progress/issues"
+  },
+  "homepage": "https://github.com/rushiraj111/ng-circle-progress#readme"
 }

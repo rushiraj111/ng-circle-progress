@@ -207,7 +207,13 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
       <ng-container
         *ngIf="+options.percent !== 0 || options.showZeroOuterStroke"
       >
-        <filter id="dropshadow" height="130%">
+        <filter
+          id="dropshadow"
+          x="-100"
+          y="-100"
+          width="1000vw"
+          height="1000vh"
+        >
           <feGaussianBlur
             in="SourceAlpha"
             [attr.stdDeviation]="4"
@@ -226,6 +232,16 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
             <!-- this contains the element that the filter is applied to -->
           </feMerge>
         </filter>
+
+        <!-- <filter id="dropshadow" x="-1" y="-1" width="100vw" height="100vh">
+          <feOffset result="offOut" in="SourceAlpha" dx="0" dy="0"></feOffset>
+          <feGaussianBlur
+            result="blurOut"
+            in="offOut"
+            stdDeviation="4"
+          ></feGaussianBlur>
+          <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
+        </filter> -->
         <path
           *ngIf="!options.outerStrokeGradient"
           [attr.d]="svg.path.d"
