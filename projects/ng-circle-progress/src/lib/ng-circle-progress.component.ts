@@ -216,13 +216,13 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
         >
           <feGaussianBlur
             in="SourceAlpha"
-            [attr.stdDeviation]="4"
+            [attr.stdDeviation]="2"
           ></feGaussianBlur>
           <!-- stdDeviation is how much to blur -->
           <feOffset [attr.dx]="0" [attr.dy]="0" result="offsetblur"></feOffset>
           <!-- how much to offset -->
           <feComponentTransfer>
-            <feFuncA type="linear" [attr.slope]="0.6"></feFuncA>
+            <feFuncA type="linear" [attr.slope]="0.4"></feFuncA>
             <!-- slope is the opacity of the shadow -->
           </feComponentTransfer>
           <feMerge>
