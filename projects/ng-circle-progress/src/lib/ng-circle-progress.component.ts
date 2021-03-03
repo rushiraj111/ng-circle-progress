@@ -68,6 +68,8 @@ export interface CircleProgressOptionsInterface {
   startFromZero?: boolean;
   showZeroOuterStroke?: boolean;
   lazy?: boolean;
+  radiusCutoff1?: number;
+  radiusCutoff2?: number;
 }
 
 export class CircleProgressOptions implements CircleProgressOptionsInterface {
@@ -124,6 +126,8 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
   startFromZero = true;
   showZeroOuterStroke = true;
   lazy = false;
+  radiusCutoff1 = 2;
+  radiusCutoff2 = 10;
 }
 
 @Component({
@@ -207,7 +211,7 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
       <ng-container
         *ngIf="+options.percent !== 0 || options.showZeroOuterStroke"
       >
-        <filter
+        <!-- <filter
           id="dropshadow"
           x="-100"
           y="-100"
@@ -218,20 +222,15 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
             in="SourceAlpha"
             [attr.stdDeviation]="2"
           ></feGaussianBlur>
-          <!-- stdDeviation is how much to blur -->
           <feOffset [attr.dx]="0" [attr.dy]="0" result="offsetblur"></feOffset>
-          <!-- how much to offset -->
           <feComponentTransfer>
             <feFuncA type="linear" [attr.slope]="0.4"></feFuncA>
-            <!-- slope is the opacity of the shadow -->
           </feComponentTransfer>
           <feMerge>
             <feMergeNode></feMergeNode>
-            <!-- this contains the offset blurred image -->
             <feMergeNode in="SourceGraphic"></feMergeNode>
-            <!-- this contains the element that the filter is applied to -->
           </feMerge>
-        </filter>
+        </filter> -->
 
         <!-- <filter id="dropshadow" x="-1" y="-1" width="100vw" height="100vh">
           <feOffset result="offOut" in="SourceAlpha" dx="0" dy="0"></feOffset>
@@ -242,13 +241,71 @@ export class CircleProgressOptions implements CircleProgressOptionsInterface {
           ></feGaussianBlur>
           <feBlend in="SourceGraphic" in2="blurOut" mode="normal"></feBlend>
         </filter> -->
+
+        <!-- <filter id="dropshadow1" x="-80" y="-80" height="150" width="150"> -->
+        <filter id="dropshadow1" x="-150" y="-250" height="500" width="500">
+          <feDropShadow
+            dx="0"
+            dy="0"
+            stdDeviation="3"
+            flood-color="black"
+            flood-opacity="0.4"
+          ></feDropShadow>
+        </filter>
+        <filter id="dropshadow2" x="-8" y="-14" height="28" width="16">
+          <feDropShadow
+            dx="0"
+            dy="0"
+            stdDeviation="3"
+            flood-color="black"
+            flood-opacity="0.4"
+          ></feDropShadow>
+        </filter>
+        <filter id="dropshadow3" x="-1" y="-1" height="3" width="3">
+          <feDropShadow
+            dx="0"
+            dy="0"
+            stdDeviation="3"
+            flood-color="black"
+            flood-opacity="0.4"
+          ></feDropShadow>
+        </filter>
         <path
-          *ngIf="!options.outerStrokeGradient"
+          *ngIf="
+            !options.outerStrokeGradient &&
+            options.percent < options.radiusCutoff1
+          "
           [attr.d]="svg.path.d"
           [attr.stroke]="svg.path.stroke"
           [attr.stroke-width]="svg.path.strokeWidth"
           [attr.stroke-linecap]="svg.path.strokeLinecap"
-          filter="url(#dropshadow)"
+          filter="url(#dropshadow1)"
+          [attr.fill]="svg.path.fill"
+        />
+        <path
+          *ngIf="
+            !options.outerStrokeGradient &&
+            options.percent >= options.radiusCutoff1 &&
+            options.percent < options.radiusCutoff2
+          "
+          [attr.d]="svg.path.d"
+          [attr.stroke]="svg.path.stroke"
+          [attr.stroke-width]="svg.path.strokeWidth"
+          [attr.stroke-linecap]="svg.path.strokeLinecap"
+          filter="url(#dropshadow2)"
+          [attr.fill]="svg.path.fill"
+        />
+
+        <path
+          *ngIf="
+            !options.outerStrokeGradient &&
+            options.percent >= options.radiusCutoff2
+          "
+          [attr.d]="svg.path.d"
+          [attr.stroke]="svg.path.stroke"
+          [attr.stroke-width]="svg.path.strokeWidth"
+          [attr.stroke-linecap]="svg.path.strokeLinecap"
+          filter="url(#dropshadow3)"
           [attr.fill]="svg.path.fill"
         />
         <path
@@ -387,6 +444,9 @@ export class CircleProgressComponent implements OnChanges, OnInit, OnDestroy {
   @Input() showZeroOuterStroke: boolean;
 
   @Input() lazy: boolean;
+
+  @Input() radiusCutoff1: number;
+  @Input() radiusCutoff2: number;
 
   @Input('options') templateOptions: CircleProgressOptions;
 
